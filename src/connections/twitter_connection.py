@@ -5,6 +5,7 @@ from requests_oauthlib import OAuth1Session
 from dotenv import set_key, load_dotenv
 from src.connections.base_connection import BaseConnection, Action, ActionParameter
 from src.helpers import print_h_bar
+from src.database import Database
 
 logger = logging.getLogger("connections.twitter_connection")
 
@@ -440,7 +441,9 @@ class TwitterConnection(BaseConnection):
         response = self._make_request('post', 'tweets', json={'text': message})
 
         logger.info("Tweet posted successfully")
-        #response {'data': {'text': 'In a world where transparency meets innovation, Alxion is your witty guide through the complexities of blockchain technology. With a touch of humor and a wealth of knowledge, she makes the digital landscape not just navigable, but downright enjoyable.', 'edit_history_tweet_ids': ['1883121158515466356'], 'id': '1883121158515466356'}}
+        db = Database()
+        db.insert_tweet_id(response['data']['id'])
+        db.close()
         return response
 
     def reply_to_tweet(self, tweet_id: str, message: str, **kwargs) -> dict:
