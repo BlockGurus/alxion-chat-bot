@@ -14,9 +14,14 @@ class Database:
     #     collection = self.get_tweets_database()
     #     return collection.find()
     
-    def insert_tweet_id(self,tweet_id):
+    #  {
+    #     text: "In a world where transparency meets innovation, Alxion is your witty guide through the complexities of blockchain technology. With a touch of humor and a wealth of knowledge, she makes the digital landscape not just navigable, but downright enjoyable.",
+    #     edit_history_tweet_ids: ["1883121158515466356"],
+    #     id: "1883121158515466356"
+    #   }
+    def insert_tweet(self,tweet):
         collection = self.get_tweets_database()
-        collection.insert_one({"tweet_id":tweet_id})
+        collection.insert_one(tweet)
 
     def close(self):
         self.client.close()

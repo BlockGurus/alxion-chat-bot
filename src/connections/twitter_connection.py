@@ -442,7 +442,7 @@ class TwitterConnection(BaseConnection):
 
         logger.info("Tweet posted successfully")
         db = Database()
-        db.insert_tweet_id(response['data']['id'])
+        db.insert_tweet(response['data'])
         db.close()
         return response
 
